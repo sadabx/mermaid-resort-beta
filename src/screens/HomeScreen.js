@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, SafeAreaView, Pressable } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Pressable } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { roomsData } from '../data/rooms';
 
 export default function HomeScreen({ navigation }) {
