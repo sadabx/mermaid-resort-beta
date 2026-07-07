@@ -33,8 +33,8 @@ Before you begin, ensure you have the following installed:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/sadabx/mermaid-resort-beta.git
-   cd react-app
+   git clone https://github.com/sadabx/Resort-react.git
+   cd Resort-react
    ```
 
 2. **Install dependencies**
@@ -55,29 +55,22 @@ Before you begin, ensure you have the following installed:
 ## 📁 Project Structure
 
 ```
-mermaid-resort-beta/
-├── react-app/              # React Native app
-│   ├── src/
-│   │   ├── screens/        # Screen components
-│   │   │   ├── HomeScreen.js
-│   │   │   ├── RoomDetailsScreen.js
-│   │   │   ├── BookingFormScreen.js
-│   │   │   └── AdminDashboardScreen.js
-│   │   ├── data/
-│   │   │   └── rooms.js    # Room data and utilities
-│   │   └── api.js          # API calls and services
-│   ├── assets/             # Images and resources
-│   ├── App.js              # Root app component
-│   ├── index.js            # Entry point
-│   ├── app.json            # Expo configuration
-│   └── package.json        # Project dependencies
-├── assets/                 # Shared assets (images, photos)
-├── index.html              # Static HTML
-├── restaurant.html         # Restaurant page
-├── rooms.js                # Room data (legacy)
-├── script.js               # JavaScript utilities
-├── styles.css              # Global styles
-└── README.md               # This file
+Resort-react/
+├── src/
+│   ├── screens/        # Screen components
+│   │   ├── HomeScreen.js
+│   │   ├── RoomDetailsScreen.js
+│   │   ├── BookingFormScreen.js
+│   │   └── AdminDashboardScreen.js
+│   ├── data/
+│   │   └── rooms.js    # Room data and utilities
+│   └── api.js          # API calls and services
+├── assets/             # Images, logos, icons, and photos
+├── App.js              # Root app component
+├── index.js            # Entry point
+├── app.json            # Expo configuration
+├── package.json        # Project dependencies
+└── README.md           # This file
 ```
 
 ## 🎯 Getting Started

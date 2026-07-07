@@ -21,9 +21,9 @@ pnpm-debug.log*
 .DS_Store
 
 # Expo / React Native
-react-app/.expo/
-react-app/.expo-shared/
-react-app/web-build/
+.expo/
+.expo-shared/
+web-build/
 
 # Editor settings
 .vscode/
