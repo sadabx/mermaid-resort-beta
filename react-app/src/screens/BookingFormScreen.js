@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
+import { View, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity, ActivityIndicator, Alert, Linking } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
@@ -21,6 +21,10 @@ export default function BookingFormScreen({ route, navigation }) {
   const [idPhotoName, setIdPhotoName] = useState('');
   const [idPhotoBase64, setIdPhotoBase64] = useState('');
   const [idPhotoMimeType, setIdPhotoMimeType] = useState('');
+
+  const [customerPhotoName, setCustomerPhotoName] = useState('');
+  const [customerPhotoBase64, setCustomerPhotoBase64] = useState('');
+  const [customerPhotoMimeType, setCustomerPhotoMimeType] = useState('');
   
   const [submitting, setSubmitting] = useState(false);
 
@@ -87,10 +91,31 @@ export default function BookingFormScreen({ route, navigation }) {
     }
   };
 
+  const pickCustomerPhoto = async () => {
+    try {
+      let result = await DocumentPicker.getDocumentAsync({
+        type: ['image/*'],
+        copyToCacheDirectory: true
+      });
+      
+      if (!result.canceled && result.assets && result.assets.length > 0) {
+        const asset = result.assets[0];
+        setCustomerPhotoName(asset.name);
+        setCustomerPhotoMimeType(asset.mimeType || 'image/jpeg');
+        
+        const base64 = await FileSystem.readAsStringAsync(asset.uri, { encoding: FileSystem.EncodingType.Base64 });
+        setCustomerPhotoBase64(base64);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const handleSubmit = async () => {
     if (!checkin || !checkout) return Alert.alert("Error", "Please select check-in and check-out dates.");
     if (!fullName || !phone || !email) return Alert.alert("Error", "Name, phone, and email are required.");
     if (!idPhotoBase64) return Alert.alert("Error", "Please upload your ID Photo/PDF.");
+    if (!customerPhotoBase64) return Alert.alert("Error", "Please upload your Customer Photo/Selfie.");
 
     setSubmitting(true);
     
@@ -99,7 +124,6 @@ export default function BookingFormScreen({ route, navigation }) {
     const advance30 = Math.round(totalAmount * 0.3);
 
     const payload = {
-      timestamp: new Date().toLocaleString(),
       room: room.name,
       pricePerNight: room.price,
       checkin: checkin,
@@ -115,6 +139,9 @@ export default function BookingFormScreen({ route, navigation }) {
       idPhotoBase64: idPhotoBase64,
       idPhotoMimeType: idPhotoMimeType,
       idPhotoName: idPhotoName,
+      customerPhotoBase64: customerPhotoBase64,
+      customerPhotoMimeType: customerPhotoMimeType,
+      customerPhotoName: customerPhotoName,
       ipAddress: 'App Booking'
     };
 
@@ -122,8 +149,12 @@ export default function BookingFormScreen({ route, navigation }) {
     setSubmitting(false);
 
     if (result && result.success) {
-      Alert.alert("Success", "Booking submitted successfully!", [
-        { text: "OK", onPress: () => navigation.navigate('Home') }
+      Alert.alert("Success", "Booking submitted! You will now be redirected to bKash to complete your 30% advance payment.", [
+        { text: "Pay Now", onPress: () => {
+          const checkoutUrl = `https://mermaid.trionine.xyz/api/bkash/initiate?bookingId=${result.bookingId}`;
+          Linking.openURL(checkoutUrl);
+          navigation.navigate('Home');
+        }}
       ]);
     } else {
       Alert.alert("Error", result?.error || "Failed to submit booking.");
@@ -188,8 +219,14 @@ export default function BookingFormScreen({ route, navigation }) {
         <Text style={styles.uploadText}>{idPhotoName || "Select Photo or PDF"}</Text>
       </TouchableOpacity>
 
+      <Text style={styles.label}>Upload Customer Photo (Selfie)</Text>
+      <TouchableOpacity style={styles.uploadButton} onPress={pickCustomerPhoto}>
+        <Upload color="#aaa" size={20} style={{ marginRight: 10 }} />
+        <Text style={styles.uploadText}>{customerPhotoName || "Select Selfie/Photo"}</Text>
+      </TouchableOpacity>
+
       <TouchableOpacity style={styles.submitButton} onPress={handleSubmit} disabled={submitting}>
-        {submitting ? <ActivityIndicator color="#fff" /> : <Text style={styles.submitButtonText}>SUBMIT BOOKING</Text>}
+        {submitting ? <ActivityIndicator color="#fff" /> : <Text style={styles.submitButtonText}>SUBMIT & PAY WITH bKASH</Text>}
       </TouchableOpacity>
     </ScrollView>
   );

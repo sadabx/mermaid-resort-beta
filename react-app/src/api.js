@@ -1,8 +1,8 @@
-export const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw5wG-WQXyhkHPJgFWot3wuM2vi1fkg2XGaPXC8NPMsR3hhO3crs5ZRLp5xvdw2QbBTGg/exec';
+export const API_BASE_URL = 'https://mermaid.trionine.xyz';
 
 export const fetchBookedDates = async (room) => {
   try {
-    const response = await fetch(`${GOOGLE_SCRIPT_URL}?action=getBookedDates&room=${encodeURIComponent(room)}`);
+    const response = await fetch(`${API_BASE_URL}/api/booked-dates?room=${encodeURIComponent(room)}`);
     const data = await response.json();
     return data.dates || [];
   } catch (error) {
@@ -13,9 +13,9 @@ export const fetchBookedDates = async (room) => {
 
 export const submitBooking = async (payload) => {
   try {
-    const response = await fetch(GOOGLE_SCRIPT_URL, {
+    const response = await fetch(`${API_BASE_URL}/api/bookings`, {
       method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
     const data = await response.json();
@@ -26,13 +26,39 @@ export const submitBooking = async (payload) => {
   }
 };
 
-export const fetchAllBookings = async () => {
+export const fetchAllBookings = async (token) => {
   try {
-    const response = await fetch(`${GOOGLE_SCRIPT_URL}?action=getAllBookings`);
+    const response = await fetch(`${API_BASE_URL}/api/admin/bookings`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    if (!response.ok) {
+      throw new Error("Unauthorized or server error");
+    }
     const data = await response.json();
-    return data.bookings || [];
+    return data || [];
   } catch (error) {
     console.error("Error fetching all bookings:", error);
     return [];
+  }
+};
+
+export const deleteBooking = async (id, token) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/admin/bookings/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    if (!response.ok) {
+      throw new Error("Failed to delete booking");
+    }
+    const data = await response.json();
+    return { success: true, data };
+  } catch (error) {
+    console.error("Error deleting booking:", error);
+    return { success: false, error: error.message };
   }
 };
