@@ -1,0 +1,28 @@
+# Flutter/Dart
+.dart_tool/
+.packages
+.pub-cache/
+build/
+ios/Flutter/Flutter.framework
+.flutter-plugins
+.flutter-plugins-dependencies
+.flutter-plugins
+.flutter-plugins-dependencies
+.flutter-plugins
+.idea/
+.vscode/
+android/.gradle/
+**/GeneratedPluginRegistrant.*
+
+# IntelliJ
+*.iml
+
+# macOS
+.DS_Store
+
+# Logs
+logs/
+*.log
+
+# Assets that are large or should not be committed (optional)
+# assets/
