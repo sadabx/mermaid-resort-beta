@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { roomsData } from '../data/rooms';
+import { colors } from '../theme/colors';
 
 export default function HomeScreen({ navigation }) {
   const [adminTapCount, setAdminTapCount] = React.useState(0);
@@ -55,16 +56,16 @@ export default function HomeScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#0a0a0a' },
+  container: { flex: 1, backgroundColor: colors.background },
   header: { padding: 20, paddingTop: 10, alignItems: 'center', marginBottom: 10 },
-  headerSubtitle: { fontSize: 12, color: '#ef4444', letterSpacing: 4, fontWeight: 'bold', marginBottom: 4 },
-  headerTitle: { fontSize: 24, fontWeight: 'bold', color: '#fff', letterSpacing: 2 },
+  headerSubtitle: { fontSize: 12, color: colors.primary, letterSpacing: 4, fontWeight: 'bold', marginBottom: 4 },
+  headerTitle: { fontSize: 24, fontWeight: 'bold', color: colors.text, letterSpacing: 2 },
   listContainer: { paddingHorizontal: 15, paddingBottom: 30 },
-  card: { backgroundColor: '#111', borderRadius: 4, marginBottom: 20, overflow: 'hidden', borderWidth: 1, borderColor: '#222' },
+  card: { backgroundColor: colors.surface, borderRadius: 4, marginBottom: 20, overflow: 'hidden', borderWidth: 1, borderColor: colors.border },
   image: { width: '100%', height: 220, resizeMode: 'cover' },
   cardContent: { padding: 15 },
-  roomName: { fontSize: 20, fontWeight: 'bold', color: '#fff', marginBottom: 6 },
-  price: { fontSize: 18, color: '#ef4444', fontWeight: 'bold', marginBottom: 8, fontFamily: 'monospace' },
-  perNight: { fontSize: 14, color: '#666', fontWeight: 'normal' },
-  features: { fontSize: 12, color: '#888' }
+  roomName: { fontSize: 20, fontWeight: 'bold', color: colors.text, marginBottom: 6 },
+  price: { fontSize: 18, color: colors.primary, fontWeight: 'bold', marginBottom: 8, fontFamily: 'monospace' },
+  perNight: { fontSize: 14, color: colors.textSubtle, fontWeight: 'normal' },
+  features: { fontSize: 12, color: colors.textMuted }
 });

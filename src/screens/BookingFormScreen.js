@@ -5,6 +5,7 @@ import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
 import { fetchBookedDates, submitBooking } from '../api';
 import { Upload } from 'lucide-react-native';
+import { colors } from '../theme/colors';
 
 export default function BookingFormScreen({ route, navigation }) {
   const { room } = route.params;
@@ -51,11 +52,11 @@ export default function BookingFormScreen({ route, navigation }) {
   const getMarkedDates = () => {
     let marked = {};
     bookedDates.forEach(date => {
-      marked[date] = { disabled: true, disableTouchEvent: true, color: '#222', textColor: '#555' };
+      marked[date] = { disabled: true, disableTouchEvent: true, color: colors.border, textColor: colors.textPlaceholder };
     });
     
-    if (checkin) marked[checkin] = { startingDay: true, color: '#ef4444', textColor: 'white', marked: true };
-    if (checkout) marked[checkout] = { endingDay: true, color: '#ef4444', textColor: 'white', marked: true };
+    if (checkin) marked[checkin] = { startingDay: true, color: colors.primary, textColor: 'white', marked: true };
+    if (checkout) marked[checkout] = { endingDay: true, color: colors.primary, textColor: 'white', marked: true };
     
     if (checkin && checkout) {
       let currentDate = new Date(checkin);
@@ -173,7 +174,7 @@ export default function BookingFormScreen({ route, navigation }) {
 
       <Text style={styles.label}>Select Dates</Text>
       {loadingDates ? (
-        <ActivityIndicator size="small" color="#ef4444" style={{ marginVertical: 20 }} />
+        <ActivityIndicator size="small" color={colors.primary} style={{ marginVertical: 20 }} />
       ) : (
         <Calendar
           onDayPress={handleDayPress}
@@ -181,14 +182,14 @@ export default function BookingFormScreen({ route, navigation }) {
           markingType={'period'}
           minDate={new Date().toISOString().split('T')[0]}
           theme={{
-            calendarBackground: '#111',
-            textSectionTitleColor: '#aaa',
-            dayTextColor: '#fff',
-            todayTextColor: '#ef4444',
-            selectedDayTextColor: '#fff',
-            monthTextColor: '#fff',
-            indicatorColor: '#ef4444',
-            arrowColor: '#ef4444',
+            calendarBackground: colors.surface,
+            textSectionTitleColor: colors.textSecondary,
+            dayTextColor: colors.text,
+            todayTextColor: colors.primary,
+            selectedDayTextColor: colors.text,
+            monthTextColor: colors.text,
+            indicatorColor: colors.primary,
+            arrowColor: colors.primary,
           }}
           style={styles.calendar}
         />
@@ -202,48 +203,48 @@ export default function BookingFormScreen({ route, navigation }) {
       )}
 
       <Text style={styles.label}>Full Name</Text>
-      <TextInput style={styles.input} placeholderTextColor="#666" placeholder="John Doe" value={fullName} onChangeText={setFullName} />
+      <TextInput style={styles.input} placeholderTextColor={colors.textSubtle} placeholder="John Doe" value={fullName} onChangeText={setFullName} />
 
       <Text style={styles.label}>Phone Number</Text>
-      <TextInput style={styles.input} placeholderTextColor="#666" placeholder="+880 1..." keyboardType="phone-pad" value={phone} onChangeText={setPhone} />
+      <TextInput style={styles.input} placeholderTextColor={colors.textSubtle} placeholder="+880 1..." keyboardType="phone-pad" value={phone} onChangeText={setPhone} />
 
       <Text style={styles.label}>Email Address</Text>
-      <TextInput style={styles.input} placeholderTextColor="#666" placeholder="john@example.com" keyboardType="email-address" value={email} onChangeText={setEmail} />
+      <TextInput style={styles.input} placeholderTextColor={colors.textSubtle} placeholder="john@example.com" keyboardType="email-address" value={email} onChangeText={setEmail} />
 
       <Text style={styles.label}>Number of Guests</Text>
-      <TextInput style={styles.input} placeholderTextColor="#666" placeholder="2" keyboardType="numeric" value={guests} onChangeText={setGuests} />
+      <TextInput style={styles.input} placeholderTextColor={colors.textSubtle} placeholder="2" keyboardType="numeric" value={guests} onChangeText={setGuests} />
 
       <Text style={styles.label}>Upload ID / Passport</Text>
       <TouchableOpacity style={styles.uploadButton} onPress={pickDocument}>
-        <Upload color="#aaa" size={20} style={{ marginRight: 10 }} />
+        <Upload color={colors.textSecondary} size={20} style={{ marginRight: 10 }} />
         <Text style={styles.uploadText}>{idPhotoName || "Select Photo or PDF"}</Text>
       </TouchableOpacity>
 
       <Text style={styles.label}>Upload Customer Photo (Selfie)</Text>
       <TouchableOpacity style={styles.uploadButton} onPress={pickCustomerPhoto}>
-        <Upload color="#aaa" size={20} style={{ marginRight: 10 }} />
+        <Upload color={colors.textSecondary} size={20} style={{ marginRight: 10 }} />
         <Text style={styles.uploadText}>{customerPhotoName || "Select Selfie/Photo"}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.submitButton} onPress={handleSubmit} disabled={submitting}>
-        {submitting ? <ActivityIndicator color="#fff" /> : <Text style={styles.submitButtonText}>SUBMIT & PAY WITH bKASH</Text>}
+        {submitting ? <ActivityIndicator color={colors.text} /> : <Text style={styles.submitButtonText}>SUBMIT & PAY WITH bKASH</Text>}
       </TouchableOpacity>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#0a0a0a' },
-  roomName: { fontSize: 22, fontWeight: 'bold', color: '#fff' },
-  price: { fontSize: 16, color: '#ef4444', fontWeight: 'bold', marginBottom: 20 },
-  label: { fontSize: 14, fontWeight: 'bold', color: '#888', textTransform: 'uppercase', marginBottom: 8, marginTop: 15 },
+  container: { flex: 1, backgroundColor: colors.background },
+  roomName: { fontSize: 22, fontWeight: 'bold', color: colors.text },
+  price: { fontSize: 16, color: colors.primary, fontWeight: 'bold', marginBottom: 20 },
+  label: { fontSize: 14, fontWeight: 'bold', color: colors.textMuted, textTransform: 'uppercase', marginBottom: 8, marginTop: 15 },
   calendar: { borderRadius: 8, overflow: 'hidden', marginBottom: 10 },
-  input: { backgroundColor: '#111', borderWidth: 1, borderColor: '#222', borderRadius: 4, color: '#fff', padding: 12, fontSize: 16 },
-  uploadButton: { backgroundColor: '#111', borderWidth: 1, borderColor: '#222', borderRadius: 4, padding: 12, flexDirection: 'row', alignItems: 'center' },
-  uploadText: { color: '#aaa', fontSize: 16, flex: 1 },
-  summaryBox: { backgroundColor: '#1a1a1a', padding: 15, borderRadius: 8, marginTop: 10, borderLeftWidth: 4, borderLeftColor: '#ef4444' },
-  summaryText: { color: '#aaa', fontSize: 14 },
-  summaryTotal: { color: '#fff', fontSize: 18, fontWeight: 'bold', marginTop: 5 },
-  submitButton: { backgroundColor: '#ef4444', padding: 16, borderRadius: 4, alignItems: 'center', marginTop: 30 },
-  submitButtonText: { color: '#fff', fontWeight: 'bold', fontSize: 16, letterSpacing: 1 }
+  input: { backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border, borderRadius: 4, color: colors.text, padding: 12, fontSize: 16 },
+  uploadButton: { backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border, borderRadius: 4, padding: 12, flexDirection: 'row', alignItems: 'center' },
+  uploadText: { color: colors.textSecondary, fontSize: 16, flex: 1 },
+  summaryBox: { backgroundColor: colors.surfaceAlt, padding: 15, borderRadius: 8, marginTop: 10, borderLeftWidth: 4, borderLeftColor: colors.primary },
+  summaryText: { color: colors.textSecondary, fontSize: 14 },
+  summaryTotal: { color: colors.text, fontSize: 18, fontWeight: 'bold', marginTop: 5 },
+  submitButton: { backgroundColor: colors.primary, padding: 16, borderRadius: 4, alignItems: 'center', marginTop: 30 },
+  submitButtonText: { color: colors.text, fontWeight: 'bold', fontSize: 16, letterSpacing: 1 }
 });

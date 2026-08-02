@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, FlatList, Dimensions } from 'react-native';
 import { Check } from 'lucide-react-native';
+import { colors } from '../theme/colors';
 
 const { width } = Dimensions.get('window');
 
@@ -35,7 +36,7 @@ export default function RoomDetailsScreen({ route, navigation }) {
           <View style={styles.featuresList}>
             {room.features.map((feature, index) => (
               <View key={index} style={styles.featureItem}>
-                <Check color="#ef4444" size={16} style={styles.featureIcon} />
+                <Check color={colors.primary} size={16} style={styles.featureIcon} />
                 <Text style={styles.featureText}>{feature}</Text>
               </View>
             ))}
@@ -56,20 +57,20 @@ export default function RoomDetailsScreen({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#0a0a0a' },
+  container: { flex: 1, backgroundColor: colors.background },
   carousel: { height: 280 },
   carouselImage: { width: width, height: 280, resizeMode: 'cover' },
   content: { padding: 20, paddingBottom: 100 },
-  title: { fontSize: 24, fontWeight: 'bold', color: '#fff', marginBottom: 5 },
-  price: { fontSize: 20, color: '#ef4444', fontWeight: 'bold', fontFamily: 'monospace', marginBottom: 20 },
-  perNight: { fontSize: 14, color: '#666', fontWeight: 'normal' },
-  sectionTitle: { fontSize: 16, fontWeight: 'bold', color: '#fff', textTransform: 'uppercase', tracking: 1, marginTop: 20, marginBottom: 10 },
-  description: { fontSize: 14, color: '#aaa', lineHeight: 22 },
+  title: { fontSize: 24, fontWeight: 'bold', color: colors.text, marginBottom: 5 },
+  price: { fontSize: 20, color: colors.primary, fontWeight: 'bold', fontFamily: 'monospace', marginBottom: 20 },
+  perNight: { fontSize: 14, color: colors.textSubtle, fontWeight: 'normal' },
+  sectionTitle: { fontSize: 16, fontWeight: 'bold', color: colors.text, textTransform: 'uppercase', tracking: 1, marginTop: 20, marginBottom: 10 },
+  description: { fontSize: 14, color: colors.textSecondary, lineHeight: 22 },
   featuresList: { marginTop: 5 },
   featureItem: { flexDirection: 'row', alignItems: 'center', marginBottom: 8 },
   featureIcon: { marginRight: 10 },
-  featureText: { color: '#ccc', fontSize: 14 },
-  footer: { position: 'absolute', bottom: 0, left: 0, right: 0, padding: 20, backgroundColor: '#0a0a0a', borderTopWidth: 1, borderTopColor: '#222' },
-  bookButton: { backgroundColor: '#ef4444', padding: 16, borderRadius: 4, alignItems: 'center' },
-  bookButtonText: { color: '#fff', fontWeight: 'bold', fontSize: 16, letterSpacing: 1 }
+  featureText: { color: colors.textSoft, fontSize: 14 },
+  footer: { position: 'absolute', bottom: 0, left: 0, right: 0, padding: 20, backgroundColor: colors.background, borderTopWidth: 1, borderTopColor: colors.border },
+  bookButton: { backgroundColor: colors.primary, padding: 16, borderRadius: 4, alignItems: 'center' },
+  bookButtonText: { color: colors.text, fontWeight: 'bold', fontSize: 16, letterSpacing: 1 }
 });

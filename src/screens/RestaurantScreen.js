@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking, FlatList } from 'react-native';
 import { Utensils, Flame, Salad, Coffee, MessageSquare } from 'lucide-react-native';
+import { colors } from '../theme/colors';
 
 const menuData = [
   {
@@ -89,7 +90,7 @@ export default function RestaurantScreen() {
         return (
           <View key={cat.category} style={styles.categorySection}>
             <View style={styles.categoryHeader}>
-              <CategoryIcon size={18} color="#ef4444" style={{ marginRight: 8 }} />
+              <CategoryIcon size={18} color={colors.primary} style={{ marginRight: 8 }} />
               <Text style={styles.categoryTitle}>{cat.category}</Text>
             </View>
             <View style={styles.menuList}>
@@ -106,7 +107,7 @@ export default function RestaurantScreen() {
           Please inform our restaurant staff or contact the front desk to place your order. Room service is available for all suites.
         </Text>
         <TouchableOpacity style={styles.whatsappBtn} onPress={handleOrder}>
-          <MessageSquare size={18} color="#fff" style={{ marginRight: 8 }} />
+          <MessageSquare size={18} color={colors.text} style={{ marginRight: 8 }} />
           <Text style={styles.whatsappBtnText}>ORDER VIA WHATSAPP</Text>
         </TouchableOpacity>
       </View>
@@ -115,30 +116,30 @@ export default function RestaurantScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#0a0a0a' },
-  hero: { padding: 30, paddingVertical: 45, backgroundColor: '#111', borderBottomWidth: 1, borderBottomColor: '#222', alignItems: 'center', position: 'relative' },
+  container: { flex: 1, backgroundColor: colors.background },
+  hero: { padding: 30, paddingVertical: 45, backgroundColor: colors.surface, borderBottomWidth: 1, borderBottomColor: colors.border, alignItems: 'center', position: 'relative' },
   heroOverlay: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.4)' },
-  heroSubtitle: { color: '#ef4444', fontSize: 12, letterSpacing: 4, fontWeight: 'bold', textTransform: 'uppercase', marginBottom: 6, zIndex: 1 },
-  heroTitle: { color: '#fff', fontSize: 24, fontWeight: 'bold', letterSpacing: 2, zIndex: 1 },
-  heroDesc: { color: '#888', fontSize: 13, marginTop: 8, zIndex: 1, textAlign: 'center' },
+  heroSubtitle: { color: colors.primary, fontSize: 12, letterSpacing: 4, fontWeight: 'bold', textTransform: 'uppercase', marginBottom: 6, zIndex: 1 },
+  heroTitle: { color: colors.text, fontSize: 24, fontWeight: 'bold', letterSpacing: 2, zIndex: 1 },
+  heroDesc: { color: colors.textMuted, fontSize: 13, marginTop: 8, zIndex: 1, textAlign: 'center' },
 
   categorySection: { marginTop: 25, paddingHorizontal: 15 },
-  categoryHeader: { flexDirection: 'row', alignItems: 'center', marginBottom: 15, borderBottomWidth: 1, borderBottomColor: '#222', paddingBottom: 8 },
-  categoryTitle: { color: '#fff', fontSize: 16, fontWeight: 'bold', letterSpacing: 1 },
-  menuList: { backgroundColor: '#111', borderRadius: 6, borderHorizontalWidth: 1, borderColor: '#222', overflow: 'hidden' },
+  categoryHeader: { flexDirection: 'row', alignItems: 'center', marginBottom: 15, borderBottomWidth: 1, borderBottomColor: colors.border, paddingBottom: 8 },
+  categoryTitle: { color: colors.text, fontSize: 16, fontWeight: 'bold', letterSpacing: 1 },
+  menuList: { backgroundColor: colors.surface, borderRadius: 6, borderHorizontalWidth: 1, borderColor: colors.border, overflow: 'hidden' },
 
-  menuItem: { padding: 15, borderBottomWidth: 1, borderBottomColor: '#1a1a1a' },
+  menuItem: { padding: 15, borderBottomWidth: 1, borderBottomColor: colors.surfaceAlt },
   itemHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  itemName: { color: '#fff', fontSize: 14, fontWeight: 'bold', flexShrink: 1 },
-  itemPrice: { color: '#ef4444', fontSize: 14, fontWeight: 'bold', fontFamily: 'monospace', marginLeft: 10 },
-  itemDesc: { color: '#888', fontSize: 12, marginTop: 5, lineHeight: 17 },
+  itemName: { color: colors.text, fontSize: 14, fontWeight: 'bold', flexShrink: 1 },
+  itemPrice: { color: colors.primary, fontSize: 14, fontWeight: 'bold', fontFamily: 'monospace', marginLeft: 10 },
+  itemDesc: { color: colors.textMuted, fontSize: 12, marginTop: 5, lineHeight: 17 },
   
-  badge: { backgroundColor: 'rgba(239, 68, 68, 0.1)', borderWidth: 1, borderColor: '#ef444440', borderRadius: 3, paddingVertical: 1, paddingHorizontal: 5, marginLeft: 8 },
-  badgeText: { color: '#ef4444', fontSize: 9, fontWeight: 'bold', textTransform: 'uppercase' },
+  badge: { backgroundColor: colors.primarySoft, borderWidth: 1, borderColor: colors.primaryBorder, borderRadius: 3, paddingVertical: 1, paddingHorizontal: 5, marginLeft: 8 },
+  badgeText: { color: colors.primary, fontSize: 9, fontWeight: 'bold', textTransform: 'uppercase' },
 
-  ctaBox: { margin: 15, marginTop: 30, padding: 20, backgroundColor: '#111', borderWidth: 1, borderColor: '#222', borderRadius: 6, alignItems: 'center' },
-  ctaTitle: { color: '#fff', fontSize: 18, fontWeight: 'bold', marginBottom: 8 },
-  ctaText: { color: '#888', fontSize: 12, textAlign: 'center', lineHeight: 18, marginBottom: 20 },
-  whatsappBtn: { backgroundColor: '#25D366', flexDirection: 'row', alignItems: 'center', paddingVertical: 12, paddingHorizontal: 20, borderRadius: 4 },
-  whatsappBtnText: { color: '#fff', fontWeight: 'bold', fontSize: 13, letterSpacing: 1 }
+  ctaBox: { margin: 15, marginTop: 30, padding: 20, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border, borderRadius: 6, alignItems: 'center' },
+  ctaTitle: { color: colors.text, fontSize: 18, fontWeight: 'bold', marginBottom: 8 },
+  ctaText: { color: colors.textMuted, fontSize: 12, textAlign: 'center', lineHeight: 18, marginBottom: 20 },
+  whatsappBtn: { backgroundColor: colors.whatsapp, flexDirection: 'row', alignItems: 'center', paddingVertical: 12, paddingHorizontal: 20, borderRadius: 4 },
+  whatsappBtnText: { color: colors.text, fontWeight: 'bold', fontSize: 13, letterSpacing: 1 }
 });

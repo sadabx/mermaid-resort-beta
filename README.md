@@ -14,20 +14,57 @@ React Native mobile application built with Expo for the Mermaid Resort booking s
    npm start
    ```
 
+## Build APK
+
+Use Java 17 for Gradle builds.
+
+1. **Generate the ignored Android project**
+   ```bash
+   npx expo prebuild --platform android --no-install
+   ```
+
+   Run this again whenever native settings, permissions, icons, or splash configuration change.
+
+2. **Build the smaller release APK**
+   ```bash
+   cd android
+   JAVA_HOME=/usr/lib/jvm/java-17-openjdk ./gradlew assembleRelease
+   ```
+
+   Output:
+   ```bash
+   android/app/build/outputs/apk/release/app-release.apk
+   ```
+
+3. **Build a debug APK for testing**
+   ```bash
+   cd android
+   JAVA_HOME=/usr/lib/jvm/java-17-openjdk ./gradlew assembleDebug
+   ```
+
+   Output:
+   ```bash
+   android/app/build/outputs/apk/debug/app-debug.apk
+   ```
+
+Debug APKs are much larger because they keep debug-friendly native libraries and less optimization. Use `assembleRelease` when you want the smaller APK to share or install normally.
+
 ## Project Structure
 
 ```
-Resort-react/
+Resort-app/
 ├── src/
+│   ├── navigation/     # React Navigation stacks and tabs
 │   ├── screens/        # Screen components (Home, Details, Booking, Admin)
 │   │   ├── HomeScreen.js
 │   │   ├── RoomDetailsScreen.js
 │   │   ├── BookingFormScreen.js
 │   │   └── AdminDashboardScreen.js
+│   ├── theme/          # Shared colors and navigation theme
 │   ├── data/           # Local static datasets (rooms.js)
 │   └── api.js          # API service caller
 ├── assets/             # Images, logos, icons, and photos
-├── App.js              # Entrypoint and stack routing
+├── App.js              # Entrypoint and loading wrapper
 ├── app.json            # Expo configuration
 └── package.json        # Dependencies
 ```

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, ActivityIndicator, RefreshControl, TextInput, TouchableOpacity, Alert, Modal, Image, ScrollView, Linking } from 'react-native';
 import { fetchAllBookings, deleteBooking, API_BASE_URL } from '../api';
 import { Eye, Trash2, LogOut, RefreshCw, X, FileText, User, Calendar, CreditCard, Shield } from 'lucide-react-native';
+import { colors } from '../theme/colors';
 
 export default function AdminDashboardScreen() {
   const [username, setUsername] = useState('');
@@ -100,21 +101,21 @@ export default function AdminDashboardScreen() {
 
   const renderPaymentBadge = (status) => {
     status = (status || 'pending').toLowerCase();
-    let bgColor = 'rgba(239, 68, 68, 0.1)';
-    let textColor = '#ef4444';
+    let bgColor = colors.primarySoft;
+    let textColor = colors.primary;
     let label = 'Unpaid';
 
     if (status === 'paid') {
       bgColor = 'rgba(16, 185, 129, 0.1)';
-      textColor = '#10b981';
+      textColor = colors.success;
       label = 'Paid';
     } else if (status === 'pending') {
       bgColor = 'rgba(245, 158, 11, 0.1)';
-      textColor = '#f59e0b';
+      textColor = colors.warning;
       label = 'Pending';
     } else if (status === 'cancelled') {
       bgColor = 'rgba(156, 163, 175, 0.1)';
-      textColor = '#9ca3af';
+      textColor = colors.neutral;
       label = 'Cancelled';
     }
 
@@ -142,15 +143,15 @@ export default function AdminDashboardScreen() {
 
         <View style={styles.cardContent}>
           <View style={styles.infoRow}>
-            <User size={14} color="#888" style={{ marginRight: 6 }} />
+            <User size={14} color={colors.textMuted} style={{ marginRight: 6 }} />
             <Text style={styles.infoText}>{fullName}</Text>
           </View>
           <View style={styles.infoRow}>
-            <Calendar size={14} color="#888" style={{ marginRight: 6 }} />
+            <Calendar size={14} color={colors.textMuted} style={{ marginRight: 6 }} />
             <Text style={styles.infoText}>{item.checkin} to {item.checkout} ({item.nights} {item.nights === 1 ? 'night' : 'nights'})</Text>
           </View>
           <View style={styles.infoRow}>
-            <CreditCard size={14} color="#888" style={{ marginRight: 6 }} />
+            <CreditCard size={14} color={colors.textMuted} style={{ marginRight: 6 }} />
             <Text style={styles.infoText}>Total: ৳{totalAmount.toLocaleString()} • Adv: ৳{advanceAmount.toLocaleString()}</Text>
           </View>
         </View>
@@ -163,15 +164,15 @@ export default function AdminDashboardScreen() {
               setModalVisible(true);
             }}
           >
-            <Eye size={16} color="#fff" style={{ marginRight: 6 }} />
+            <Eye size={16} color={colors.text} style={{ marginRight: 6 }} />
             <Text style={styles.actionBtnText}>Details</Text>
           </TouchableOpacity>
           <TouchableOpacity 
             style={[styles.actionBtn, styles.deleteBtn]} 
             onPress={() => handleDelete(item.id)}
           >
-            <Trash2 size={16} color="#ef4444" style={{ marginRight: 6 }} />
-            <Text style={[styles.actionBtnText, { color: '#ef4444' }]}>Delete</Text>
+            <Trash2 size={16} color={colors.primary} style={{ marginRight: 6 }} />
+            <Text style={[styles.actionBtnText, { color: colors.primary }]}>Delete</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -183,7 +184,7 @@ export default function AdminDashboardScreen() {
       <View style={styles.loginContainer}>
         <View style={styles.loginBox}>
           <View style={styles.logoWrapper}>
-            <Shield size={40} color="#ef4444" />
+            <Shield size={40} color={colors.primary} />
           </View>
           <Text style={styles.loginTitle}>ADMIN PORTAL</Text>
           <Text style={styles.loginSubtitle}>Access control database</Text>
@@ -193,7 +194,7 @@ export default function AdminDashboardScreen() {
           <TextInput 
             style={styles.input} 
             placeholder="Username" 
-            placeholderTextColor="#555" 
+            placeholderTextColor={colors.textPlaceholder}
             value={username}
             onChangeText={setUsername}
             autoCapitalize="none"
@@ -201,7 +202,7 @@ export default function AdminDashboardScreen() {
           <TextInput 
             style={styles.input} 
             placeholder="Password" 
-            placeholderTextColor="#555" 
+            placeholderTextColor={colors.textPlaceholder}
             secureTextEntry 
             value={password}
             onChangeText={setPassword}
@@ -209,7 +210,7 @@ export default function AdminDashboardScreen() {
           />
 
           <TouchableOpacity style={styles.loginBtn} onPress={handleLogin} disabled={loginLoading}>
-            {loginLoading ? <ActivityIndicator color="#fff" /> : <Text style={styles.loginBtnText}>LOGIN</Text>}
+            {loginLoading ? <ActivityIndicator color={colors.text} /> : <Text style={styles.loginBtnText}>LOGIN</Text>}
           </TouchableOpacity>
         </View>
       </View>
@@ -228,10 +229,10 @@ export default function AdminDashboardScreen() {
         </View>
         <View style={styles.headerBtnGroup}>
           <TouchableOpacity style={styles.headerBtn} onPress={() => loadBookings()}>
-            <RefreshCw size={18} color="#fff" />
+            <RefreshCw size={18} color={colors.text} />
           </TouchableOpacity>
           <TouchableOpacity style={[styles.headerBtn, { marginLeft: 10 }]} onPress={handleLogout}>
-            <LogOut size={18} color="#ef4444" />
+            <LogOut size={18} color={colors.primary} />
           </TouchableOpacity>
         </View>
       </View>
@@ -244,23 +245,23 @@ export default function AdminDashboardScreen() {
         </View>
         <View style={styles.statBox}>
           <Text style={styles.statLabel}>REVENUE</Text>
-          <Text style={[styles.statVal, { color: '#10b981' }]}>৳{totalRevenue.toLocaleString()}</Text>
+          <Text style={[styles.statVal, { color: colors.success }]}>৳{totalRevenue.toLocaleString()}</Text>
         </View>
         <View style={styles.statBox}>
           <Text style={styles.statLabel}>ADVANCE</Text>
-          <Text style={[styles.statVal, { color: '#ef4444' }]}>৳{totalAdvance.toLocaleString()}</Text>
+          <Text style={[styles.statVal, { color: colors.primary }]}>৳{totalAdvance.toLocaleString()}</Text>
         </View>
       </View>
 
       {loading && bookings.length === 0 ? (
-        <ActivityIndicator size="large" color="#ef4444" style={{ marginTop: 50 }} />
+        <ActivityIndicator size="large" color={colors.primary} style={{ marginTop: 50 }} />
       ) : (
         <FlatList
           data={bookings}
           keyExtractor={(item) => item.id.toString()}
           renderItem={renderBookingItem}
           contentContainerStyle={{ paddingHorizontal: 15, paddingBottom: 30 }}
-          refreshControl={<RefreshControl refreshing={loading} onRefresh={() => loadBookings()} tintColor="#ef4444" />}
+          refreshControl={<RefreshControl refreshing={loading} onRefresh={() => loadBookings()} tintColor={colors.primary} />}
           ListEmptyComponent={<Text style={styles.emptyText}>No bookings found.</Text>}
         />
       )}
@@ -281,7 +282,7 @@ export default function AdminDashboardScreen() {
                   <Text style={styles.modalSub}>Booking #{selectedBooking.id}</Text>
                 </View>
                 <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.closeBtn}>
-                  <X size={20} color="#fff" />
+                  <X size={20} color={colors.text} />
                 </TouchableOpacity>
               </View>
 
@@ -295,7 +296,7 @@ export default function AdminDashboardScreen() {
                   </View>
                   <View style={styles.gridRow}>
                     <Text style={styles.gridLabel}>Phone:</Text>
-                    <Text style={[styles.gridValue, { color: '#ef4444' }]} onPress={() => Linking.openURL(`tel:${selectedBooking.phone}`)}>
+                    <Text style={[styles.gridValue, { color: colors.primary }]} onPress={() => Linking.openURL(`tel:${selectedBooking.phone}`)}>
                       {selectedBooking.phone}
                     </Text>
                   </View>
@@ -305,7 +306,7 @@ export default function AdminDashboardScreen() {
                   </View>
                   <View style={styles.gridRow}>
                     <Text style={styles.gridLabel}>IP Address:</Text>
-                    <Text style={[styles.gridValue, { color: '#555' }]}>{selectedBooking.ip_address || "N/A"}</Text>
+                    <Text style={[styles.gridValue, { color: colors.textPlaceholder }]}>{selectedBooking.ip_address || "N/A"}</Text>
                   </View>
                 </View>
 
@@ -326,7 +327,7 @@ export default function AdminDashboardScreen() {
                   </View>
                   <View style={styles.gridRow}>
                     <Text style={styles.gridLabel}>Created On:</Text>
-                    <Text style={[styles.gridValue, { color: '#555' }]}>{selectedBooking.created_at || "N/A"}</Text>
+                    <Text style={[styles.gridValue, { color: colors.textPlaceholder }]}>{selectedBooking.created_at || "N/A"}</Text>
                   </View>
                 </View>
 
@@ -348,7 +349,7 @@ export default function AdminDashboardScreen() {
                   {(selectedBooking.bkash_trx_id || selectedBooking.bkashTrxId) ? (
                     <View style={styles.gridRow}>
                       <Text style={styles.gridLabel}>bKash TrxID:</Text>
-                      <Text style={[styles.gridValue, { fontFamily: 'monospace', color: '#10b981' }]}>
+                      <Text style={[styles.gridValue, { fontFamily: 'monospace', color: colors.success }]}>
                         {selectedBooking.bkash_trx_id || selectedBooking.bkashTrxId}
                       </Text>
                     </View>
@@ -368,7 +369,7 @@ export default function AdminDashboardScreen() {
                           style={styles.pdfBtn}
                           onPress={() => Linking.openURL(`${API_BASE_URL}/api/admin/bookings/attachments/${selectedBooking.id}/idPhoto?token=${token}`)}
                         >
-                          <FileText size={24} color="#ef4444" />
+                          <FileText size={24} color={colors.primary} />
                           <Text style={styles.pdfBtnText}>Open ID PDF Document</Text>
                         </TouchableOpacity>
                       ) : (
@@ -413,67 +414,67 @@ export default function AdminDashboardScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#0a0a0a' },
-  loginContainer: { flex: 1, backgroundColor: '#0a0a0a', justifyContent: 'center', alignItems: 'center', padding: 20 },
-  loginBox: { width: '100%', maxWidth: 360, backgroundColor: '#111', borderWidth: 1, borderColor: '#222', borderRadius: 8, padding: 25 },
-  logoWrapper: { alignSelf: 'center', marginBottom: 15, padding: 12, backgroundColor: 'rgba(239, 68, 68, 0.1)', borderRadius: 50 },
-  loginTitle: { color: '#fff', fontSize: 20, fontWeight: 'bold', textAlign: 'center', letterSpacing: 2 },
-  loginSubtitle: { color: '#666', fontSize: 12, textAlign: 'center', marginBottom: 25 },
-  errorText: { color: '#ef4444', backgroundColor: 'rgba(239, 68, 68, 0.1)', borderWidth: 1, borderColor: '#ef444430', borderRadius: 4, padding: 10, fontSize: 13, marginBottom: 20, textAlign: 'center' },
-  input: { backgroundColor: '#050505', borderWidth: 1, borderColor: '#222', borderRadius: 4, color: '#fff', padding: 12, fontSize: 16, marginBottom: 15 },
-  loginBtn: { backgroundColor: '#ef4444', padding: 14, borderRadius: 4, alignItems: 'center', marginTop: 10 },
-  loginBtnText: { color: '#fff', fontWeight: 'bold', fontSize: 16, letterSpacing: 1 },
+  container: { flex: 1, backgroundColor: colors.background },
+  loginContainer: { flex: 1, backgroundColor: colors.background, justifyContent: 'center', alignItems: 'center', padding: 20 },
+  loginBox: { width: '100%', maxWidth: 360, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border, borderRadius: 8, padding: 25 },
+  logoWrapper: { alignSelf: 'center', marginBottom: 15, padding: 12, backgroundColor: colors.primarySoft, borderRadius: 50 },
+  loginTitle: { color: colors.text, fontSize: 20, fontWeight: 'bold', textAlign: 'center', letterSpacing: 2 },
+  loginSubtitle: { color: colors.textSubtle, fontSize: 12, textAlign: 'center', marginBottom: 25 },
+  errorText: { color: colors.primary, backgroundColor: colors.primarySoft, borderWidth: 1, borderColor: colors.primaryBorderSubtle, borderRadius: 4, padding: 10, fontSize: 13, marginBottom: 20, textAlign: 'center' },
+  input: { backgroundColor: colors.surfaceDeep, borderWidth: 1, borderColor: colors.border, borderRadius: 4, color: colors.text, padding: 12, fontSize: 16, marginBottom: 15 },
+  loginBtn: { backgroundColor: colors.primary, padding: 14, borderRadius: 4, alignItems: 'center', marginTop: 10 },
+  loginBtnText: { color: colors.text, fontWeight: 'bold', fontSize: 16, letterSpacing: 1 },
 
   // Dashboard Styles
-  headerControls: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 15, borderBottomWidth: 1, borderBottomColor: '#222' },
-  adminTitle: { color: '#fff', fontSize: 18, fontWeight: 'bold' },
-  adminSubtitle: { color: '#666', fontSize: 12 },
+  headerControls: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 15, borderBottomWidth: 1, borderBottomColor: colors.border },
+  adminTitle: { color: colors.text, fontSize: 18, fontWeight: 'bold' },
+  adminSubtitle: { color: colors.textSubtle, fontSize: 12 },
   headerBtnGroup: { flexDirection: 'row' },
-  headerBtn: { backgroundColor: '#111', borderWidth: 1, borderColor: '#222', padding: 10, borderRadius: 4 },
+  headerBtn: { backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border, padding: 10, borderRadius: 4 },
   
-  statsBoard: { flexDirection: 'row', justifyContent: 'space-between', padding: 15, backgroundColor: '#111', margin: 15, borderRadius: 6, borderWidth: 1, borderColor: '#222' },
+  statsBoard: { flexDirection: 'row', justifyContent: 'space-between', padding: 15, backgroundColor: colors.surface, margin: 15, borderRadius: 6, borderWidth: 1, borderColor: colors.border },
   statBox: { flex: 1, alignItems: 'center' },
-  statLabel: { color: '#666', fontSize: 10, fontWeight: 'bold', marginBottom: 4 },
-  statVal: { color: '#fff', fontSize: 16, fontWeight: 'bold', fontFamily: 'monospace' },
+  statLabel: { color: colors.textSubtle, fontSize: 10, fontWeight: 'bold', marginBottom: 4 },
+  statVal: { color: colors.text, fontSize: 16, fontWeight: 'bold', fontFamily: 'monospace' },
 
-  card: { backgroundColor: '#111', borderRadius: 6, borderWidth: 1, borderColor: '#222', padding: 15, marginHorizontal: 15, marginBottom: 15 },
-  cardHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', borderBottomWidth: 1, borderBottomColor: '#222', paddingBottom: 10, marginBottom: 10 },
-  roomName: { color: '#fff', fontSize: 16, fontWeight: 'bold' },
-  bookingId: { color: '#666', fontSize: 11, fontFamily: 'monospace' },
+  card: { backgroundColor: colors.surface, borderRadius: 6, borderWidth: 1, borderColor: colors.border, padding: 15, marginHorizontal: 15, marginBottom: 15 },
+  cardHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', borderBottomWidth: 1, borderBottomColor: colors.border, paddingBottom: 10, marginBottom: 10 },
+  roomName: { color: colors.text, fontSize: 16, fontWeight: 'bold' },
+  bookingId: { color: colors.textSubtle, fontSize: 11, fontFamily: 'monospace' },
   badge: { borderWidth: 1, borderRadius: 4, paddingVertical: 2, paddingHorizontal: 6, alignSelf: 'flex-start' },
   badgeText: { fontSize: 10, fontWeight: 'bold', textTransform: 'uppercase' },
   
   cardContent: { marginBottom: 15 },
   infoRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 6 },
-  infoText: { color: '#ddd', fontSize: 13 },
+  infoText: { color: colors.textStrong, fontSize: 13 },
   
-  cardActions: { flexDirection: 'row', borderTopWidth: 1, borderTopColor: '#222', paddingTop: 10, justifyContent: 'flex-end' },
+  cardActions: { flexDirection: 'row', borderTopWidth: 1, borderTopColor: colors.border, paddingTop: 10, justifyContent: 'flex-end' },
   actionBtn: { flexDirection: 'row', alignItems: 'center', paddingVertical: 6, paddingHorizontal: 12, borderRadius: 4 },
-  viewBtn: { backgroundColor: '#222', marginRight: 10 },
+  viewBtn: { backgroundColor: colors.border, marginRight: 10 },
   deleteBtn: { backgroundColor: 'rgba(239, 68, 68, 0.05)', borderWidth: 1, borderColor: 'rgba(239, 68, 68, 0.2)' },
-  actionBtnText: { color: '#fff', fontSize: 12, fontWeight: 'bold' },
+  actionBtnText: { color: colors.text, fontSize: 12, fontWeight: 'bold' },
   
-  emptyText: { color: '#555', textAlign: 'center', marginTop: 50, fontSize: 16 },
+  emptyText: { color: colors.textPlaceholder, textAlign: 'center', marginTop: 50, fontSize: 16 },
 
   // Details Modal
   modalOverlay: { flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.85)', justifyContent: 'flex-end' },
-  modalContent: { backgroundColor: '#0a0a0a', borderTopLeftRadius: 15, borderTopRightRadius: 15, height: '90%', borderTopWidth: 1, borderTopColor: '#222' },
-  modalHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 20, borderBottomWidth: 1, borderBottomColor: '#222' },
-  modalTitle: { color: '#fff', fontSize: 18, fontWeight: 'bold' },
-  modalSub: { color: '#666', fontSize: 12 },
-  closeBtn: { padding: 8, backgroundColor: '#111', borderRadius: 20 },
+  modalContent: { backgroundColor: colors.background, borderTopLeftRadius: 15, borderTopRightRadius: 15, height: '90%', borderTopWidth: 1, borderTopColor: colors.border },
+  modalHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 20, borderBottomWidth: 1, borderBottomColor: colors.border },
+  modalTitle: { color: colors.text, fontSize: 18, fontWeight: 'bold' },
+  modalSub: { color: colors.textSubtle, fontSize: 12 },
+  closeBtn: { padding: 8, backgroundColor: colors.surface, borderRadius: 20 },
   
   modalBody: { padding: 20 },
-  detailSection: { marginBottom: 25, borderBottomWidth: 1, borderBottomColor: '#222', paddingBottom: 15 },
-  sectionTitle: { color: '#ef4444', fontSize: 12, fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 12 },
+  detailSection: { marginBottom: 25, borderBottomWidth: 1, borderBottomColor: colors.border, paddingBottom: 15 },
+  sectionTitle: { color: colors.primary, fontSize: 12, fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 12 },
   gridRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8 },
-  gridLabel: { color: '#666', fontSize: 13 },
-  gridValue: { color: '#fff', fontSize: 13, fontWeight: '500', maxWidth: '60%', textAlign: 'right' },
+  gridLabel: { color: colors.textSubtle, fontSize: 13 },
+  gridValue: { color: colors.text, fontSize: 13, fontWeight: '500', maxWidth: '60%', textAlign: 'right' },
   
-  attachmentBox: { backgroundColor: '#111', borderRadius: 6, borderWidth: 1, borderColor: '#222', padding: 12, marginBottom: 15 },
-  attachmentTitle: { color: '#aaa', fontSize: 12, fontWeight: 'bold', marginBottom: 8 },
-  attachmentImg: { width: '100%', height: 180, borderRadius: 4, backgroundColor: '#050505' },
-  pdfBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: '#222', padding: 15, borderRadius: 4, borderStyle: 'dashed', borderWidth: 1, borderColor: '#444' },
-  pdfBtnText: { color: '#fff', fontWeight: 'bold', marginLeft: 10, fontSize: 14 },
-  noFile: { color: '#444', fontSize: 12, fontStyle: 'italic' }
+  attachmentBox: { backgroundColor: colors.surface, borderRadius: 6, borderWidth: 1, borderColor: colors.border, padding: 12, marginBottom: 15 },
+  attachmentTitle: { color: colors.textSecondary, fontSize: 12, fontWeight: 'bold', marginBottom: 8 },
+  attachmentImg: { width: '100%', height: 180, borderRadius: 4, backgroundColor: colors.surfaceDeep },
+  pdfBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: colors.border, padding: 15, borderRadius: 4, borderStyle: 'dashed', borderWidth: 1, borderColor: colors.textDisabled },
+  pdfBtnText: { color: colors.text, fontWeight: 'bold', marginLeft: 10, fontSize: 14 },
+  noFile: { color: colors.textDisabled, fontSize: 12, fontStyle: 'italic' }
 });

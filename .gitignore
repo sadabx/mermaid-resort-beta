@@ -1,6 +1,5 @@
 # Node dependencies
 node_modules/
-react-app/node_modules/
 
 # Build output
 dist/
@@ -28,3 +27,10 @@ web-build/
 # Editor settings
 .vscode/
 .idea/
+
+# Native builds
+android/
+ios/
+
+# Graphify
+graphify-out/
